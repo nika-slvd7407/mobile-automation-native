@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 
 public abstract class LoginPage extends AbstractPage {
 
-
     public LoginPage(WebDriver driver) {
         super(driver);
     }

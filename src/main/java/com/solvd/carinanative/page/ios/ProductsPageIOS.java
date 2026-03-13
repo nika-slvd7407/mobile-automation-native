@@ -1,14 +1,12 @@
-package com.solvd.carinanative.page.android;
+package com.solvd.carinanative.page.ios;
 
-import com.solvd.carinanative.component.android.ProductComponentAndroid;
-import com.solvd.carinanative.component.common.ProductComponent;
+import com.solvd.carinanative.component.ios.ProductComponentIOS;
 import com.solvd.carinanative.page.common.CartPage;
 import com.solvd.carinanative.page.common.GeoLocationPage;
 import com.solvd.carinanative.page.common.ProductsPage;
 import com.solvd.carinanative.page.common.WebViewPage;
 import com.solvd.util.MobileContextUtils;
 import com.solvd.util.WaitUtil;
-import com.zebrunner.carina.utils.android.AndroidService;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -21,30 +19,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductsPage.class)
-public class ProductsPageAndroid extends ProductsPage {
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductsPage.class)
+public class ProductsPageIOS extends ProductsPage {
 
-    @FindBy(xpath = "//android.view.ViewGroup[contains (@content-desc, 'test-Item')]")
-    private List<ProductComponentAndroid> products;
+    @FindBy(xpath = "//*[@name=\"test-Item\"]")
+    private List<ProductComponentIOS> products;
 
-    @FindBy(xpath = "//android.widget.TextView[contains (@text, 'PRODUCTS')]")
+    @FindBy(xpath = "//XCUIElementTypeStaticText[@name=\"PRODUCTS\"]")
     private ExtendedWebElement title;
 
-    @FindBy(xpath = "//android.view.ViewGroup[contains (@content-desc, 'test-Cart')]")
+    @FindBy(xpath = "//*[@name=\"test-Cart\"]/*")
     private ExtendedWebElement cartButton;
 
-    @FindBy(xpath = "//*[@content-desc=\"test-Modal Selector Button\"]")
+    @FindBy(xpath = "//*[@name=\"test-Modal Selector Button\"]/*/*")
     private ExtendedWebElement sortButton;
 
     @ExtendedFindBy(accessibilityId = "test-Menu")
     private ExtendedWebElement menuButton;
 
-    public ProductsPageAndroid(WebDriver driver) {
+    public ProductsPageIOS(WebDriver driver) {
         super(driver);
         setUiLoadedMarker(title);
     }
 
-    public List<ProductComponentAndroid> getProducts() {
+    public List<ProductComponentIOS> getProducts() {
         WaitUtil.waitForElementsListNotEmpty(products, 10, getDriver());
         return products;
     }
@@ -72,25 +70,16 @@ public class ProductsPageAndroid extends ProductsPage {
 
     @Override
     public ProductsPage sortByName() {
-        By byName = By.xpath("//*[@text=\"Name (A to Z)\"]");
+        By byName = By.xpath("//XCUIElementTypeOther[@name=\"Name (A to Z)\"]");
         sortButton.click();
         findExtendedWebElement(byName).click();
         return initPage(getDriver(), ProductsPage.class);
     }
 
     @Override
-    public ProductsPage sortByPrice() {
-        By byPrice = By.xpath("//*[@text=\"Price (low to high)\"]");
-        sortButton.click();
-        findExtendedWebElement(byPrice).click();
-        return initPage(getDriver(), ProductsPage.class);
-    }
-
-    @Override
     public boolean areItemsSortedByName() {
-
         List<String> actualTitles = new ArrayList<>();
-        for (ProductComponentAndroid product : getProducts()) {
+        for (ProductComponentIOS product : getProducts()) {
             actualTitles.add(product.getTitle());
         }
 
@@ -101,11 +90,19 @@ public class ProductsPageAndroid extends ProductsPage {
     }
 
     @Override
+    public ProductsPage sortByPrice() {
+        By byPrice = By.xpath("//XCUIElementTypeOther[@name=\"Price (low to high)\"]");
+        sortButton.click();
+        findExtendedWebElement(byPrice).click();
+        return initPage(getDriver(), ProductsPage.class);
+    }
+
+    @Override
     public boolean areItemsSortedByPrice() {
         List<BigDecimal> actual = new ArrayList<>();
-        List<ProductComponentAndroid> allProducts = getProducts();
+        List<ProductComponentIOS> allProducts = getProducts();
         for (int i = 0; i < allProducts.size(); i++) {
-            ProductComponentAndroid product = allProducts.get(i);
+            ProductComponentIOS product = allProducts.get(i);
             actual.add(product.getPrice());
         }
 
@@ -129,7 +126,7 @@ public class ProductsPageAndroid extends ProductsPage {
 
     private void openSubMenuPage(SubMenu menu) {
         menuButton.click();
-        By subMenuBy = By.xpath(String.format("//*[@content-desc=\"%s\"]", menu.value));
+        By subMenuBy = By.xpath(String.format("//XCUIElementTypeOther[@name=\"%s\"]", menu.value));
         findExtendedWebElement(subMenuBy).click();
     }
 

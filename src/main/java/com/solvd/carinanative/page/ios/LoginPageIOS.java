@@ -1,4 +1,4 @@
-package com.solvd.carinanative.page.android;
+package com.solvd.carinanative.page.ios;
 
 import com.solvd.carinanative.page.common.LoginPage;
 import com.solvd.carinanative.page.common.ProductsPage;
@@ -9,24 +9,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = LoginPage.class)
-public class LoginPageAndroid extends LoginPage {
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = LoginPage.class)
+public class LoginPageIOS extends LoginPage {
 
-    @FindBy(xpath = "//android.widget.EditText[contains (@content-desc, 'test-Password')]")
+    @FindBy(xpath = "//XCUIElementTypeSecureTextField[@name=\"test-Password\"]")
     private ExtendedWebElement passwordInput;
 
-    @FindBy(xpath = "//android.widget.EditText[contains (@content-desc, 'test-Username')]")
+    @FindBy(xpath = "//XCUIElementTypeTextField[@name=\"test-Username\"]")
     private ExtendedWebElement userNameInput;
 
-    @FindBy(xpath = "//android.view.ViewGroup[contains (@content-desc, 'test-LOGIN')]")
+    @ExtendedFindBy(accessibilityId = "test-LOGIN")
     private ExtendedWebElement loginButton;
 
-    private By errorMessage = By.xpath("//android.view.ViewGroup[contains (@content-desc, 'test-Error message')]//android.widget.TextView");
+    private By errorMessage = By.xpath("//XCUIElementTypeOther[@name=\"test-Error message\"]");
 
-    public LoginPageAndroid(WebDriver driver) {
+    public LoginPageIOS(WebDriver driver) {
         super(driver);
         setUiLoadedMarker(loginButton);
-
     }
 
     @Override
@@ -44,8 +43,6 @@ public class LoginPageAndroid extends LoginPage {
 
     @Override
     public String getErrorMessageText() {
-        return findExtendedWebElement(errorMessage).getAttribute("text");
+        return findExtendedWebElement(errorMessage).getAttribute("label");
     }
-
-
 }

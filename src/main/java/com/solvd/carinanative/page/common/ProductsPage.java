@@ -29,4 +29,8 @@ public abstract class ProductsPage extends AbstractPage {
     public abstract ProductsPage sortByPrice();
 
     public abstract boolean areItemsSortedByPrice();
+
+    public abstract GeoLocationPage openGeoLocation();
+
+    public abstract WebViewPage openWebViewPage();
 }

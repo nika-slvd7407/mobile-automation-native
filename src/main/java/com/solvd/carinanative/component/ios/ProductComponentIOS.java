@@ -1,4 +1,4 @@
-package com.solvd.carinanative.component.android;
+package com.solvd.carinanative.component.ios;
 
 import com.solvd.carinanative.component.common.ProductComponent;
 import com.zebrunner.carina.utils.android.AndroidService;
@@ -10,24 +10,24 @@ import org.openqa.selenium.support.FindBy;
 
 import java.math.BigDecimal;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = ProductComponent.class)
-public class ProductComponentAndroid extends ProductComponent {
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = ProductComponent.class)
+public class ProductComponentIOS extends ProductComponent {
 
-    @FindBy(xpath = ".//android.widget.TextView[contains (@content-desc, 'test-Item title')]")
+    @FindBy(xpath = ".//*/*[1]/*[2]")
     private ExtendedWebElement title;
 
-    @FindBy(xpath = ".//android.view.ViewGroup[contains (@content-desc, 'test-ADD TO CART')]")
+    @FindBy(xpath = ".//XCUIElementTypeOther[@name=\"test-ADD TO CART\"]")
     private ExtendedWebElement addToCartButton;
 
-    @FindBy(xpath = ".//android.widget.TextView[@content-desc=\"test-Price\"]")
+    @FindBy(xpath = ".//*/*[2]/*[2]")
     private ExtendedWebElement price;
 
-    public ProductComponentAndroid(WebDriver driver, SearchContext searchContext) {
+    public ProductComponentIOS(WebDriver driver, SearchContext searchContext) {
         super(driver, searchContext);
     }
 
     public String getTitle() {
-        return title.getAttribute("text");
+        return title.getAttribute("value");
     }
 
     public void pressAddToCartButton() {
@@ -38,7 +38,7 @@ public class ProductComponentAndroid extends ProductComponent {
     public BigDecimal getPrice() {
         androidService.swipe(price);
 
-        String raw = price.getAttribute("text").replace("$", "").trim();
+        String raw = price.getAttribute("value").replace("$", "").trim();
         return new BigDecimal(raw);
     }
 }

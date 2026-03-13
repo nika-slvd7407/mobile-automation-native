@@ -1,29 +1,31 @@
-package com.solvd.carinanative.page.android;
+package com.solvd.carinanative.page.ios;
 
 import com.solvd.carinanative.page.common.CartPage;
 import com.solvd.carinanative.page.common.CheckoutPage;
 import com.solvd.util.WaitUtil;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-@DeviceType(pageType = DeviceType.Type.ANDROID_PHONE, parentClass = CartPage.class)
-public class CartPageAndroid extends CartPage {
+@DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = CartPage.class)
+public class CartPageIOS extends CartPage {
 
-    @FindBy(xpath = "//android.widget.TextView[contains (@text, 'YOUR CART')]")
+    @FindBy(xpath = "//*[@name=\"YOUR CART\"]//*")
     private ExtendedWebElement cartPageName;
 
-    @FindBy(xpath = " //android.view.ViewGroup[@content-desc='test-Description']/android.widget.TextView[1]")
+    // the iphone locators in this app are awful i dont think there is other normal way)
+    @FindBy(xpath = " //XCUIElementTypeOther[@name='test-Item']//XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]")
     private List<ExtendedWebElement> cartItems;
 
-    @FindBy(xpath = "//*[contains (@text, 'CHECKOUT')]")
+    @ExtendedFindBy(accessibilityId = "test-CHECKOUT")
     private ExtendedWebElement checkoutButton;
 
-    public CartPageAndroid(WebDriver driver) {
+    public CartPageIOS(WebDriver driver) {
         super(driver);
         setUiLoadedMarker(cartPageName);
     }
