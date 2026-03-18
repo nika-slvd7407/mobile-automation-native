@@ -41,6 +41,8 @@ public class NavigationSidebarComponentAndroid extends NavigationSidebarComponen
                 return "ABOUT";
             case LOGOUT:
                 return "LOGOUT";
+            case DRAWING:
+                return "DRAWING";
             case RESET_APP:
                 return "RESET APP STATE";
             default:

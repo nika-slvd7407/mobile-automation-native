@@ -12,6 +12,7 @@ public abstract class NavigationSidebarComponent extends AbstractUIObject {
         WEBVIEW,
         ABOUT,
         LOGOUT,
+        DRAWING,
         RESET_APP
     }
 

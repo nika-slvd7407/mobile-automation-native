@@ -1,16 +1,16 @@
 package com.solvd.carinanative.page.ios;
 
+import com.solvd.carinanative.component.common.NavigationSidebarComponent;
 import com.solvd.carinanative.component.ios.NavigationSidebarComponentIOS;
 import com.solvd.carinanative.component.ios.ProductComponentIOS;
-import com.solvd.carinanative.component.common.NavigationSidebarComponent;
 import com.solvd.carinanative.page.common.CartPage;
+import com.solvd.carinanative.page.common.DrawingPage;
 import com.solvd.carinanative.page.common.GeoLocationPage;
 import com.solvd.carinanative.page.common.ProductsPage;
 import com.solvd.carinanative.page.common.WebViewPage;
 import com.solvd.util.WaitUtil;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -117,6 +117,12 @@ public class ProductsPageIOS extends ProductsPage {
     public WebViewPage openWebViewPage() {
         navigationSidebarComponent.openMenuItem(NavigationSidebarComponent.MenuOption.WEBVIEW);
         return initPage(getDriver(), WebViewPage.class);
+    }
+
+    @Override
+    public DrawingPage openDrawingPage() {
+        navigationSidebarComponent.openMenuItem(NavigationSidebarComponent.MenuOption.DRAWING);
+        return initPage(getDriver(), DrawingPage.class);
     }
 
     private By getSortOption(SortType sortType) {

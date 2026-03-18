@@ -1,7 +1,6 @@
 package com.solvd.carinanative.component.ios;
 
 import com.solvd.carinanative.component.common.NavigationSidebarComponent;
-import com.solvd.carinanative.page.common.UtilsPage;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -39,6 +38,8 @@ public class NavigationSidebarComponentIOS extends NavigationSidebarComponent {
                 return "WEBVIEW";
             case ABOUT:
                 return "ABOUT";
+            case DRAWING:
+                return "DRAWING";
             case LOGOUT:
                 return "LOGOUT";
             case RESET_APP:

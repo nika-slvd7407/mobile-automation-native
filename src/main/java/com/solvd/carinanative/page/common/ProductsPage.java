@@ -32,6 +32,8 @@ public abstract class ProductsPage extends AbstractPage {
 
     public abstract WebViewPage openWebViewPage();
 
+    public abstract DrawingPage openDrawingPage();
+
     public enum SortType {
         NAME,
         PRICE
