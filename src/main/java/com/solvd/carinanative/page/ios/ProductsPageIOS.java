@@ -11,7 +11,6 @@ import com.solvd.util.WaitUtil;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -34,6 +33,9 @@ public class ProductsPageIOS extends ProductsPage {
 
     @FindBy(xpath = "//*[@name=\"test-Modal Selector Button\"]/*/*")
     private ExtendedWebElement sortButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
+    private ExtendedWebElement sortOption;
 
     @FindBy(xpath = "//XCUIElementTypeWindow/*")
     private ExtendedWebElement menuButton;
@@ -75,7 +77,7 @@ public class ProductsPageIOS extends ProductsPage {
     @Override
     public ProductsPage sortBy(SortType sortType) {
         sortButton.click();
-        findExtendedWebElement(getSortOption(sortType)).click();
+        sortOption.format(getSortLabel(sortType)).click();
         return initPage(getDriver(), ProductsPage.class);
     }
 
@@ -95,9 +97,7 @@ public class ProductsPageIOS extends ProductsPage {
     @Override
     public boolean areItemsSortedByPrice() {
         List<BigDecimal> actual = new ArrayList<>();
-        List<ProductComponentIOS> allProducts = getProducts();
-        for (int i = 0; i < allProducts.size(); i++) {
-            ProductComponentIOS product = allProducts.get(i);
+        for (ProductComponentIOS product : getProducts()) {
             actual.add(product.getPrice());
         }
 
@@ -119,12 +119,12 @@ public class ProductsPageIOS extends ProductsPage {
         return initPage(getDriver(), WebViewPage.class);
     }
 
-    private By getSortOption(SortType sortType) {
+    private String getSortLabel(SortType sortType) {
         switch (sortType) {
             case NAME:
-                return By.xpath("//XCUIElementTypeOther[@name=\"Name (A to Z)\"]");
+                return "Name (A to Z)";
             case PRICE:
-                return By.xpath("//XCUIElementTypeOther[@name=\"Price (low to high)\"]");
+                return "Price (low to high)";
             default:
                 throw new IllegalArgumentException("Unsupported sort type: " + sortType);
         }

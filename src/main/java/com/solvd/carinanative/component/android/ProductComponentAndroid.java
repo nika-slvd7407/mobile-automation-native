@@ -3,6 +3,7 @@ package com.solvd.carinanative.component.android;
 import com.solvd.carinanative.component.common.ProductComponent;
 import com.zebrunner.carina.utils.android.AndroidService;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.SearchContext;
@@ -28,7 +29,7 @@ public class ProductComponentAndroid extends ProductComponent {
     }
 
     public String getTitle() {
-        return title.getAttribute("text");
+        return title.getText();
     }
 
     public void clickAddToCartButton() {
@@ -37,8 +38,7 @@ public class ProductComponentAndroid extends ProductComponent {
 
     @Override
     public BigDecimal getPrice() {
-        androidService.swipe(price);
-
+        swipe(price);
         String raw = price.getAttribute("text").replace("$", "").trim();
         return new BigDecimal(raw);
     }
